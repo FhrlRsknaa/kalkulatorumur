@@ -114,7 +114,6 @@ label{
   text-align: center;
 }
 
-/* Input Group Mobile Friendly */
 .input-group {
   display: flex;
   gap: 8px;
@@ -156,7 +155,7 @@ button{
 
 button:active { transform: scale(0.96); }
 
-/* ===== WHATSAPP BOX (Selalu Ada) ===== */
+/* ===== WHATSAPP BOX ===== */
 .wa-contact {
   display: flex;
   align-items: center;
@@ -171,17 +170,9 @@ button:active { transform: scale(0.96); }
   border: 1px dashed #25d366;
   text-decoration: none;
   line-height: 1.4;
-  transition: all 0.2s;
 }
 
-.wa-contact:active { background: rgba(37, 211, 102, 0.15); }
-
-.wa-icon {
-  width: 18px;
-  height: 18px;
-  flex-shrink: 0;
-  fill: #25d366;
-}
+.wa-icon { width: 18px; height: 18px; flex-shrink: 0; fill: #25d366; }
 
 /* ===== RESULT AREA ===== */
 .result-box {
@@ -192,20 +183,8 @@ button:active { transform: scale(0.96); }
   border-top: 1px solid rgba(0,0,0,0.05);
 }
 
-#hasil{
-  font-size: 19px;
-  font-weight: 900;
-  color: #1a1a1a;
-  margin-bottom: 10px;
-}
-
-.sub-info {
-  font-size: 13px;
-  color: #a855f7;
-  font-weight: 700;
-  line-height: 1.5;
-  margin-bottom: 15px;
-}
+#hasil{ font-size: 19px; font-weight: 900; color: #1a1a1a; margin-bottom: 10px; }
+.sub-info { font-size: 13px; color: #a855f7; font-weight: 700; line-height: 1.5; margin-bottom: 15px; }
 
 #zodiac-box {
   display: inline-block;
@@ -229,18 +208,59 @@ button:active { transform: scale(0.96); }
   border: 1px solid rgba(0,0,0,0.04);
 }
 
+/* ===== MUSIC CONTROL (POJOK KIRI BAWAH) ===== */
+.music-control {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 1000;
+}
+
+.mute-btn {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.8);
+  border: 2px solid #ffffff;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s;
+}
+
+.mute-btn:active { transform: scale(0.9); }
+
+.mute-btn svg {
+  width: 22px;
+  height: 22px;
+  fill: #555;
+}
+
 .highlight { color: #ec4899; }
 
-/* Responsive adjustments for very small screens */
 @media (max-width: 360px) {
   header h1 { font-size: 18px; }
-  select { font-size: 12px; }
   button { font-size: 14px; }
 }
 </style>
 </head>
 
 <body>
+
+<!-- Background Music -->
+<audio id="bgMusic" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Mute Button -->
+<div class="music-control">
+  <button class="mute-btn" onclick="toggleMute()" id="muteBtn">
+    <svg id="icon-unmute" viewBox="0 0 24 24"><path d="M14,3.23V5.29C16.89,6.15 19,8.83 19,12C19,15.17 16.89,17.85 14,18.71V20.77C18.01,19.86 21,16.28 21,12C21,7.72 18.01,4.14 14,3.23M16.5,12C16.5,10.23 15.5,8.71 14,7.97V16.03C15.5,15.29 16.5,13.77 16.5,12M3,9V15H7L12,20V4L7,9H3Z"/></svg>
+  </button>
+</div>
 
 <div class="area-shapes" id="shapes-container"></div>
 
@@ -268,9 +288,8 @@ button:active { transform: scale(0.96); }
 
     <button onclick="hitungUmur()">CEK SEKARANG</button>
 
-    <!-- Tombol Saran WhatsApp (Sekarang di luar result-box agar selalu ada) -->
     <a href="https://wa.me/6285186814906" target="_blank" class="wa-contact">
-      <svg class="wa-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-5.5-2.8-23.2-8.5-44.2-27.1-16.4-14.6-27.4-32.7-30.6-38.2-3.2-5.6-.3-8.6 2.5-11.3 2.5-2.5 5.5-6.5 8.3-9.7 2.8-3.2 3.7-5.5 5.5-9.2 1.9-3.7 1-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 13.2 5.8 23.5 9.2 31.5 11.8 13.3 4.2 25.4 3.6 35 2.2 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>
+      <svg class="wa-icon" viewBox="0 0 448 512"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-5.5-2.8-23.2-8.5-44.2-27.1-16.4-14.6-27.4-32.7-30.6-38.2-3.2-5.6-.3-8.6 2.5-11.3 2.5-2.5 5.5-6.5 8.3-9.7 2.8-3.2 3.7-5.5 5.5-9.2 1.9-3.7 1-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 13.2 5.8 23.5 9.2 31.5 11.8 13.3 4.2 25.4 3.6 35 2.2 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>
       <span>ada saran bisa klik ini cik, tapi saran nya kalo bisa yang bagus2 aja loh ya 😹</span>
     </a>
 
@@ -289,7 +308,22 @@ button:active { transform: scale(0.96); }
 </div>
 
 <script>
-// 1. Shapes Background
+// 1. Music Logic
+const audio = document.getElementById("bgMusic");
+const muteBtn = document.getElementById("muteBtn");
+let musicStarted = false;
+
+function toggleMute() {
+  if (audio.paused) {
+    audio.play();
+    muteBtn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M14,3.23V5.29C16.89,6.15 19,8.83 19,12C19,15.17 16.89,17.85 14,18.71V20.77C18.01,19.86 21,16.28 21,12C21,7.72 18.01,4.14 14,3.23M16.5,12C16.5,10.23 15.5,8.71 14,7.97V16.03C15.5,15.29 16.5,13.77 16.5,12M3,9V15H7L12,20V4L7,9H3Z"/></svg>';
+  } else {
+    audio.pause();
+    muteBtn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M16.5,12L19,14.5L21.5,12L19,9.5L16.5,12M14,3.23V5.29C16.89,6.15 19,8.83 19,12C19,12.82 18.82,13.59 18.5,14.28L19.97,15.75C20.63,14.66 21,13.38 21,12C21,7.72 18.01,4.14 14,3.23M16.5,12C16.5,10.23 15.5,8.71 14,7.97V11.78L16.05,13.83C16.33,13.26 16.5,12.65 16.5,12M3,9V15H7L12,20V4L7,9H3Z"/></svg>';
+  }
+}
+
+// 2. Shapes Background
 function createShapes() {
   const container = document.getElementById('shapes-container');
   const colors = ['#FFADAD', '#FFD6A5', '#FDFFB6', '#CAFFBF', '#9BF6FF', '#A0C4FF', '#BDB2FF', '#FFC6FF'];
@@ -315,7 +349,7 @@ function createShapes() {
   }
 }
 
-// 2. Dropdown
+// 3. Dropdown Logic
 function populateDropdowns() {
   const daySelect = document.getElementById('day');
   const yearSelect = document.getElementById('year');
@@ -333,29 +367,31 @@ function populateDropdowns() {
   }
 }
 
-// 3. Zodiac Logic
+// 4. ZODIAK TROPICAL (BARAT) - LOGIKA PRESISI
 function getZodiac(day, month) {
-  const zodiacs = [
-    { name: "Capricorn ♑", day: 20, month: 0 },
-    { name: "Aquarius ♒", day: 19, month: 1 },
-    { name: "Pisces ♓", day: 21, month: 2 },
-    { name: "Aries ♈", day: 20, month: 3 },
-    { name: "Taurus ♉", day: 21, month: 4 },
-    { name: "Gemini ♊", day: 21, month: 5 },
-    { name: "Cancer ♋", day: 23, month: 6 },
-    { name: "Leo ♌", day: 23, month: 7 },
-    { name: "Virgo ♍", day: 23, month: 8 },
-    { name: "Libra ♎", day: 23, month: 9 },
-    { name: "Scorpio ♏", day: 23, month: 10 },
-    { name: "Sagittarius ♐", day: 22, month: 11 },
-    { name: "Capricorn ♑", day: 32, month: 12 }
-  ];
-  if (day < zodiacs[month].day) return zodiacs[month === 0 ? 0 : month - 1].name;
-  return zodiacs[month].name;
+  // month: 0=Jan, 1=Feb, ... 11=Dec
+  if ((month == 2 && day >= 21) || (month == 3 && day <= 19)) return "Aries ♈";
+  if ((month == 3 && day >= 20) || (month == 4 && day <= 20)) return "Taurus ♉";
+  if ((month == 4 && day >= 21) || (month == 5 && day <= 20)) return "Gemini ♊";
+  if ((month == 5 && day >= 21) || (month == 6 && day <= 22)) return "Cancer ♋";
+  if ((month == 6 && day >= 23) || (month == 7 && day <= 22)) return "Leo ♌";
+  if ((month == 7 && day >= 23) || (month == 8 && day <= 22)) return "Virgo ♍";
+  if ((month == 8 && day >= 23) || (month == 9 && day <= 22)) return "Libra ♎";
+  if ((month == 9 && day >= 23) || (month == 10 && day <= 21)) return "Scorpio ♏";
+  if ((month == 10 && day >= 22) || (month == 11 && day <= 21)) return "Sagitarius ♐";
+  if ((month == 11 && day >= 22) || (month == 0 && day <= 19)) return "Capricorn ♑";
+  if ((month == 0 && day >= 20) || (month == 1 && day <= 18)) return "Aquarius ♒";
+  if ((month == 1 && day >= 19) || (month == 2 && day <= 20)) return "Pisces ♓";
 }
 
-// 4. Hitung Umur
+// 5. Hitung Umur
 function hitungUmur(){
+  // Auto-play musik saat interaksi pertama (kebijakan browser)
+  if(!musicStarted) {
+    audio.play().catch(() => {});
+    musicStarted = true;
+  }
+
   const dBirth = parseInt(document.getElementById("day").value);
   const mBirth = parseInt(document.getElementById("month").value);
   const yBirth = parseInt(document.getElementById("year").value);
@@ -413,7 +449,6 @@ function hitungUmur(){
   document.getElementById("motivasi").innerHTML = pesan;
   document.getElementById("result-box").style.display = "block";
   
-  // Scroll halus ke hasil pada mobile
   setTimeout(() => {
     document.getElementById("result-box").scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }, 100);
