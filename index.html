@@ -2,50 +2,63 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kalkulator Umur Modern</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Multi Kalkulator iOS 26</title>
 
 <style>
+:root {
+  --bg-color: #e8e8eb; 
+  --glass-bg: rgba(255, 255, 255, 0.35);
+  --glass-border: rgba(255, 255, 255, 0.5);
+  --ios-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+}
+
 *{
-  box-sizing:border-box;
-  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
   -webkit-tap-highlight-color: transparent;
 }
 
 body{
   margin:0;
-  min-height:100vh;
-  background:#ffffff; 
-  overflow-x:hidden;
+  min-height: 100vh;
+  background: var(--bg-color); 
+  overflow-x: hidden;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  padding: 15px 0 80px 0;
 }
 
-/* ===== FLOATING SHAPES BACKGROUND ===== */
+/* ===== SPARKLING SHAPES BACKGROUND ===== */
 .area-shapes {
   position: fixed;
   top: 0; left: 0;
   width: 100%; height: 100%;
   z-index: -1;
+  overflow: hidden;
 }
 
 .shape {
   position: absolute;
-  filter: blur(1px);
-  opacity: 0.4;
-  animation: float infinite ease-in-out;
+  filter: blur(1.5px);
+  opacity: 0.6;
+  animation: float 6s infinite ease-in-out, sparkle 1.5s infinite alternate;
 }
 
 @keyframes float {
-  0% { transform: translate(0, 0) rotate(0deg); }
-  33% { transform: translate(30px, -40px) rotate(120deg); }
-  66% { transform: translate(-20px, 20px) rotate(240deg); }
-  100% { transform: translate(0, 0) rotate(360deg); }
+  0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+  50% { transform: translate(60px, -70px) rotate(180deg) scale(1.1); }
+  100% { transform: translate(0, 0) rotate(360deg) scale(1); }
+}
+
+@keyframes sparkle {
+  0% { opacity: 0.3; filter: brightness(1); }
+  100% { opacity: 0.8; filter: brightness(1.8) blur(2px); }
 }
 
 .circle { border-radius: 50%; }
-.square { border-radius: 20%; }
+.square { border-radius: 25%; }
 .triangle {
   width: 0; height: 0;
   background-color: transparent !important;
@@ -54,211 +67,168 @@ body{
   border-bottom: 40px solid;
 }
 
-/* ===== HEADER STYLING ===== */
-header{
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-header h1{
-  display: inline-block;
-  margin: 0;
-  padding: 10px 20px;
-  font-size: 22px;
-  color: #1a1a1a;
-  font-weight: 800;
-  background: rgba(255, 255, 255, 0.6);
-  border: 2px solid #ffffff; 
-  border-radius: 18px;
-  box-shadow: 0 8px 15px rgba(0,0,0,0.05);
-}
-
-.dev-badge {
-  display: inline-block;
-  margin-top: 12px;
-  padding: 5px 15px;
-  background: rgba(255, 255, 255, 0.8);
-  border: 2px solid #ffffff; 
-  border-radius: 50px;
-  font-size: 10px;
-  font-weight: 800;
-  color: #555;
-  letter-spacing: 1.2px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.03);
-}
-
-/* ===== CARD STYLING ===== */
+/* ===== CONTAINER & LIQUID GLASS CARDS ===== */
 .container {
-  width: 92%;
+  width: 94%;
   max-width: 400px;
-  padding: 10px 0;
 }
 
-.card{
-  position: relative;
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(20px) saturate(160%);
-  -webkit-backdrop-filter: blur(20px) saturate(160%);
-  border-radius: 30px;
-  padding: 25px 20px;
-  border: 1px solid rgba(255, 255, 255, 1);
-  box-shadow: 0 20px 40px rgba(0,0,0,0.06);
-}
-
-label{
-  display: block;
-  margin-bottom: 15px;
-  font-size: 14px;
-  font-weight: 600;
-  color: #444;
+header {
+  margin: 15px 0 25px 0;
   text-align: center;
 }
 
+header h1 {
+  font-size: 22px;
+  font-weight: 800;
+  color: #1a1a1a;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(25px);
+  padding: 10px 25px;
+  border-radius: 20px;
+  border: 1px solid var(--glass-border);
+  display: inline-block;
+  box-shadow: var(--ios-shadow);
+}
+
+.card {
+  position: relative;
+  background: var(--glass-bg);
+  backdrop-filter: blur(35px) saturate(200%);
+  -webkit-backdrop-filter: blur(35px) saturate(200%);
+  border-radius: 38px;
+  padding: 28px 20px;
+  margin-bottom: 25px;
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--ios-shadow), inset 0 0 15px rgba(255, 255, 255, 0.2);
+  overflow: hidden;
+}
+
+.card-title {
+  display: block;
+  font-size: 17px;
+  font-weight: 800;
+  color: #2c2c2e;
+  text-align: center;
+  margin-bottom: 22px;
+}
+
+/* ===== INPUTS & BUTTONS ===== */
 .input-group {
   display: flex;
-  gap: 8px;
+  gap: 10px;
   margin-bottom: 18px;
+  width: 100%;
+}
+
+select, input {
+  width: 100%;
+  min-width: 0;
+  height: 54px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.4);
+  background: rgba(255, 255, 255, 0.5);
+  color: #1c1c1e;
+  font-size: 15px;
+  font-weight: 600;
+  outline: none;
+  text-align: center;
 }
 
 select {
-  flex: 1;
-  padding: 12px 5px;
-  border-radius: 14px;
-  border: 1px solid rgba(0,0,0,0.08);
-  background: white;
-  color: #333;
-  font-size: 14px;
-  outline: none;
   cursor: pointer;
   appearance: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23333'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
-  background-position: right 8px center;
-  background-size: 12px;
-  text-align: center;
+  background-position: right 12px center;
+  background-size: 14px;
 }
 
-button{
+button {
   width: 100%;
-  padding: 16px;
+  height: 58px;
+  border-radius: 20px;
   border: none;
-  border-radius: 18px;
   background: linear-gradient(135deg, #6366f1, #a855f7, #ec4899);
   color: white;
-  font-size: 15px;
-  font-weight: 700;
+  font-size: 16px;
+  font-weight: 800;
   cursor: pointer;
-  transition: transform 0.2s;
-  box-shadow: 0 8px 20px rgba(168, 85, 247, 0.25);
+  box-shadow: 0 10px 25px rgba(168, 85, 247, 0.35);
   margin-bottom: 20px;
 }
 
-button:active { transform: scale(0.96); }
+button:active { transform: scale(0.96); opacity: 0.9; }
 
-/* ===== WHATSAPP BOX ===== */
+/* ===== WHATSAPP ASLI ===== */
 .wa-contact {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  padding: 12px 15px;
-  background: rgba(37, 211, 102, 0.08);
-  border-radius: 15px;
+  padding: 16px;
+  background: rgba(37, 211, 102, 0.12);
+  border-radius: 20px;
   font-size: 11px;
-  color: #1fa851;
+  color: #128c7e;
   font-weight: 700;
-  border: 1px dashed #25d366;
+  border: 1px dashed rgba(37, 211, 102, 0.4);
   text-decoration: none;
   line-height: 1.4;
 }
-
-.wa-icon { width: 18px; height: 18px; flex-shrink: 0; fill: #25d366; }
+.wa-icon { width: 18px; height: 18px; fill: #25d366; flex-shrink: 0; }
 
 /* ===== RESULT AREA ===== */
 .result-box {
   margin-top: 25px;
-  text-align: center;
   display: none;
+  text-align: center;
   padding-top: 20px;
-  border-top: 1px solid rgba(0,0,0,0.05);
+  border-top: 1px solid rgba(255,255,255,0.2);
 }
 
-#hasil{ font-size: 19px; font-weight: 900; color: #1a1a1a; margin-bottom: 10px; }
-.sub-info { font-size: 13px; color: #a855f7; font-weight: 700; line-height: 1.5; margin-bottom: 15px; }
+.hasil-main { font-size: 22px; font-weight: 900; color: #1c1c1e; margin-bottom: 8px; }
+.countdown-txt { font-size: 15px; font-weight: 800; color: #8b5cf6; margin-bottom: 20px; }
 
-#zodiac-box {
-  display: inline-block;
-  padding: 5px 15px;
-  background: rgba(168, 85, 247, 0.1);
-  border-radius: 12px;
-  font-size: 12px;
-  color: #a855f7;
-  font-weight: 800;
-  margin-bottom: 15px;
-  border: 1px dashed #a855f7;
-}
-
-#motivasi {
-  font-size: 12.5px;
-  color: #555;
+.info-card {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 22px;
+  padding: 18px;
+  border: 1px solid rgba(255,255,255,0.3);
+  margin-top: 15px;
+  font-size: 13.5px;
+  color: #3a3a3c;
   line-height: 1.6;
-  padding: 15px;
-  background: #fdfdfd;
-  border-radius: 20px;
-  border: 1px solid rgba(0,0,0,0.04);
+  text-align: left;
 }
 
-/* ===== MUSIC CONTROL (POJOK KIRI BAWAH) ===== */
+/* ===== MUSIC CONTROL ===== */
 .music-control {
   position: fixed;
-  bottom: 20px;
+  bottom: 25px;
   left: 20px;
   z-index: 1000;
 }
-
 .mute-btn {
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.8);
-  border: 2px solid #ffffff;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-  backdrop-filter: blur(10px);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform 0.2s;
-}
-
-.mute-btn:active { transform: scale(0.9); }
-
-.mute-btn svg {
-  width: 22px;
-  height: 22px;
-  fill: #555;
-}
-
-.highlight { color: #ec4899; }
-
-@media (max-width: 360px) {
-  header h1 { font-size: 18px; }
-  button { font-size: 14px; }
+  width: 52px; height: 52px; border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(15px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--ios-shadow);
+  display: flex; align-items: center; justify-content: center;
 }
 </style>
 </head>
 
 <body>
 
-<!-- Background Music -->
 <audio id="bgMusic" loop>
   <source src="music.mp3" type="audio/mpeg">
 </audio>
 
-<!-- Mute Button -->
 <div class="music-control">
   <button class="mute-btn" onclick="toggleMute()" id="muteBtn">
-    <svg id="icon-unmute" viewBox="0 0 24 24"><path d="M14,3.23V5.29C16.89,6.15 19,8.83 19,12C19,15.17 16.89,17.85 14,18.71V20.77C18.01,19.86 21,16.28 21,12C21,7.72 18.01,4.14 14,3.23M16.5,12C16.5,10.23 15.5,8.71 14,7.97V16.03C15.5,15.29 16.5,13.77 16.5,12M3,9V15H7L12,20V4L7,9H3Z"/></svg>
+    <svg viewBox="0 0 24 24" width="26" height="26" fill="#1c1c1e"><path d="M14,3.23V5.29C16.89,6.15 19,8.83 19,12C19,15.17 16.89,17.85 14,18.71V20.77C18.01,19.86 21,16.28 21,12C21,7.72 18.01,4.14 14,3.23M16.5,12C16.5,10.23 15.5,8.71 14,7.97V16.03C15.5,15.29 16.5,13.77 16.5,12M3,9V15H7L12,20V4L7,9H3Z"/></svg>
   </button>
 </div>
 
@@ -266,13 +236,13 @@ button:active { transform: scale(0.96); }
 
 <div class="container">
   <header>
-    <h1>Kalkulator Umur</h1><br>
-    <div class="dev-badge">DEV BY FAHRUL</div>
+    <h1>Multi Kalkulator</h1><br>
+    <span style="font-size: 10px; font-weight: 900; color: #636366; letter-spacing: 2px;">DEV BY FAHRUL</span>
   </header>
 
+  <!-- CARD 1: UMUR -->
   <div class="card">
-    <label>Kapan hari lahirmu?</label>
-    
+    <span class="card-title">📅 Cek Umur & Zodiak</span>
     <div class="input-group">
       <select id="day"></select>
       <select id="month">
@@ -285,7 +255,6 @@ button:active { transform: scale(0.96); }
       </select>
       <select id="year"></select>
     </div>
-
     <button onclick="hitungUmur()">CEK SEKARANG</button>
 
     <a href="https://wa.me/6285186814906" target="_blank" class="wa-contact">
@@ -293,83 +262,82 @@ button:active { transform: scale(0.96); }
       <span>ada saran bisa klik ini cik, tapi saran nya kalo bisa yang bagus2 aja loh ya 😹</span>
     </a>
 
-    <div class="result-box" id="result-box">
-      <div id="hasil"></div>
-      
-      <div class="sub-info">
-        <div id="countdown"></div>
-        <div id="targetAge"></div>
-      </div>
+    <div class="result-box" id="result-box-umur">
+      <div id="hasil-umur" class="hasil-main"></div>
+      <!-- COUNTDOWN ULTAH + UMUR BERIKUTNYA -->
+      <div id="countdown-ultah" class="countdown-txt"></div>
+      <div class="info-card" id="zodiac-box" style="text-align:center; font-weight:900; color:#7c3aed;"></div>
+      <div class="info-card" id="motivasi-umur"></div>
+    </div>
+  </div>
 
-      <div id="zodiac-box"></div>
-      <div id="motivasi"></div>
+  <!-- CARD 2: KALORI -->
+  <div class="card">
+    <span class="card-title">🔥 Kalkulator Kalori Harian</span>
+    <select id="gender" style="margin-bottom:12px;">
+      <option value="pria">Laki-laki</option>
+      <option value="wanita">Perempuan</option>
+    </select>
+    <div class="input-group">
+      <input type="number" id="weight" placeholder="Berat (kg)">
+      <input type="number" id="height" placeholder="Tinggi (cm)">
+    </div>
+    <button onclick="hitungKalori()" style="background: linear-gradient(135deg, #10b981, #3b82f6);">HITUNG KALORI</button>
+
+    <div class="result-box" id="result-box-kalori">
+      <div style="text-align:center; font-size:11px; font-weight:800; color:#7c3aed; text-transform:uppercase;">Estimasi Kebutuhan</div>
+      <div id="val-kalori" class="hasil-main" style="font-size:30px; margin:8px 0;"></div>
+      <div class="info-card">
+        <b>🏃 Aktivitas:</b><br><span id="list-aktivitas"></span>
+      </div>
+      <div class="info-card">
+        <b>🍽️ Contoh Menu:</b><br><span id="food-menu"></span>
+      </div>
+      <div class="info-card" id="motivasi-kalori" style="font-style:italic; text-align:center;"></div>
     </div>
   </div>
 </div>
 
 <script>
-// 1. Music Logic
 const audio = document.getElementById("bgMusic");
-const muteBtn = document.getElementById("muteBtn");
 let musicStarted = false;
 
 function toggleMute() {
-  if (audio.paused) {
-    audio.play();
-    muteBtn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M14,3.23V5.29C16.89,6.15 19,8.83 19,12C19,15.17 16.89,17.85 14,18.71V20.77C18.01,19.86 21,16.28 21,12C21,7.72 18.01,4.14 14,3.23M16.5,12C16.5,10.23 15.5,8.71 14,7.97V16.03C15.5,15.29 16.5,13.77 16.5,12M3,9V15H7L12,20V4L7,9H3Z"/></svg>';
-  } else {
-    audio.pause();
-    muteBtn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M16.5,12L19,14.5L21.5,12L19,9.5L16.5,12M14,3.23V5.29C16.89,6.15 19,8.83 19,12C19,12.82 18.82,13.59 18.5,14.28L19.97,15.75C20.63,14.66 21,13.38 21,12C21,7.72 18.01,4.14 14,3.23M16.5,12C16.5,10.23 15.5,8.71 14,7.97V11.78L16.05,13.83C16.33,13.26 16.5,12.65 16.5,12M3,9V15H7L12,20V4L7,9H3Z"/></svg>';
-  }
+  if (audio.paused) { audio.play(); } else { audio.pause(); }
 }
 
-// 2. Shapes Background
 function createShapes() {
   const container = document.getElementById('shapes-container');
   const colors = ['#FFADAD', '#FFD6A5', '#FDFFB6', '#CAFFBF', '#9BF6FF', '#A0C4FF', '#BDB2FF', '#FFC6FF'];
-  for (let i = 0; i < 12; i++) {
+  for (let i = 0; i < 18; i++) {
     const shape = document.createElement('div');
-    const size = Math.random() * 40 + 20;
+    const size = Math.random() * 50 + 25;
     const typeNum = Math.floor(Math.random() * 3);
+    const color = colors[Math.floor(Math.random() * colors.length)];
     if(typeNum === 0) shape.className = 'shape circle';
     else if(typeNum === 1) shape.className = 'shape square';
-    else {
-      shape.className = 'shape triangle';
-      shape.style.borderBottomColor = colors[Math.floor(Math.random() * colors.length)];
-    }
-    if(typeNum !== 2) {
-        shape.style.width = `${size}px`; shape.style.height = `${size}px`;
-        shape.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    else { shape.className = 'shape triangle'; shape.style.borderBottomColor = color; }
+    if(typeNum !== 2) { 
+        shape.style.width = `${size}px`; 
+        shape.style.height = `${size}px`; 
+        shape.style.background = `radial-gradient(circle at 30% 30%, white, ${color})`;
     }
     shape.style.top = `${Math.random() * 100}%`;
     shape.style.left = `${Math.random() * 100}%`;
-    shape.style.animationDuration = `${Math.random() * 10 + 15}s`;
-    shape.style.animationDelay = `${Math.random() * -20}s`;
+    shape.style.animationDuration = `${Math.random() * 3 + 4}s`;
     container.appendChild(shape);
   }
 }
 
-// 3. Dropdown Logic
 function populateDropdowns() {
-  const daySelect = document.getElementById('day');
-  const yearSelect = document.getElementById('year');
-  const currentYear = new Date().getFullYear();
-  for (let i = 1; i <= 31; i++) {
-    let opt = document.createElement('option');
-    opt.value = i; opt.innerHTML = i;
-    daySelect.appendChild(opt);
-  }
-  for (let i = currentYear + 1; i >= 1900; i--) {
-    let opt = document.createElement('option');
-    opt.value = i; opt.innerHTML = i;
-    if(i === currentYear) opt.selected = true;
-    yearSelect.appendChild(opt);
-  }
+  const dSel = document.getElementById('day');
+  const ySel = document.getElementById('year');
+  const curY = new Date().getFullYear();
+  for (let i = 1; i <= 31; i++) { let o = document.createElement('option'); o.value = i; o.innerHTML = i; dSel.appendChild(o); }
+  for (let i = curY; i >= 1900; i--) { let o = document.createElement('option'); o.value = i; o.innerHTML = i; ySel.appendChild(o); }
 }
 
-// 4. ZODIAK TROPICAL (BARAT) - LOGIKA PRESISI
 function getZodiac(day, month) {
-  // month: 0=Jan, 1=Feb, ... 11=Dec
   if ((month == 2 && day >= 21) || (month == 3 && day <= 19)) return "Aries ♈";
   if ((month == 3 && day >= 20) || (month == 4 && day <= 20)) return "Taurus ♉";
   if ((month == 4 && day >= 21) || (month == 5 && day <= 20)) return "Gemini ♊";
@@ -384,74 +352,55 @@ function getZodiac(day, month) {
   if ((month == 1 && day >= 19) || (month == 2 && day <= 20)) return "Pisces ♓";
 }
 
-// 5. Hitung Umur
 function hitungUmur(){
-  // Auto-play musik saat interaksi pertama (kebijakan browser)
-  if(!musicStarted) {
-    audio.play().catch(() => {});
-    musicStarted = true;
-  }
-
-  const dBirth = parseInt(document.getElementById("day").value);
-  const mBirth = parseInt(document.getElementById("month").value);
-  const yBirth = parseInt(document.getElementById("year").value);
-
+  if(!musicStarted) { audio.play().catch(() => {}); musicStarted = true; }
+  const d = parseInt(document.getElementById("day").value);
+  const m = parseInt(document.getElementById("month").value);
+  const y = parseInt(document.getElementById("year").value);
   const now = new Date();
-  const birthDate = new Date(yBirth, mBirth, dBirth);
+  const birth = new Date(y, m, d);
 
-  if (birthDate > now) {
-    document.getElementById("hasil").innerHTML = "Belum lahir ✨";
-    document.getElementById("result-box").style.display = "block";
-    return;
-  }
-
-  let yNow = now.getFullYear() - birthDate.getFullYear();
-  let mNow = now.getMonth() - birthDate.getMonth();
-  let dNow = now.getDate() - birthDate.getDate();
-  if (dNow < 0) {
-    mNow--;
-    let lastMonth = new Date(now.getFullYear(), now.getMonth(), 0).getDate();
-    dNow += lastMonth;
-  }
+  // Umur detail saat ini
+  let yNow = now.getFullYear() - birth.getFullYear();
+  let mNow = now.getMonth() - birth.getMonth();
+  let dNow = now.getDate() - birth.getDate();
+  if (dNow < 0) { mNow--; dNow += new Date(now.getFullYear(), now.getMonth(), 0).getDate(); }
   if (mNow < 0) { yNow--; mNow += 12; }
 
-  document.getElementById("hasil").innerHTML = `${yNow} thn • ${mNow} bln • ${dNow} hari`;
+  // Umur target di ultah berikutnya
+  let targetAge = yNow + 1;
 
-  // Countdown Presisi
-  let nextBday = new Date(now.getFullYear(), mBirth, dBirth);
+  // Countdown ke ultah berikutnya
+  let nextBday = new Date(now.getFullYear(), m, d);
   if (now >= nextBday) nextBday.setFullYear(now.getFullYear() + 1);
+  let totalDaysLeft = Math.ceil((nextBday - now) / (1000 * 60 * 60 * 24));
 
-  let diffTime = nextBday.getTime() - now.getTime();
-  let totalDaysLeft = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  document.getElementById("hasil-umur").innerHTML = `${yNow} thn • ${mNow} bln • ${dNow} hari`;
+  document.getElementById("countdown-ultah").innerHTML = `🎂 ${totalDaysLeft} hari lagi ulang tahun ke-${targetAge}!`;
+  document.getElementById("zodiac-box").innerHTML = "Zodiak: " + getZodiac(d, m);
+  document.getElementById("motivasi-umur").innerHTML = "Masa depan cerah menantimu. Nikmati setiap detik perjalanan hidupmu! ✨";
+  document.getElementById("result-box-umur").style.display = "block";
+}
 
-  let tempDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-  let mLeft = 0;
-  while (true) {
-    tempDate.setMonth(tempDate.getMonth() + 1);
-    if (tempDate > nextBday) { tempDate.setMonth(tempDate.getMonth() - 1); break; }
-    mLeft++;
-  }
-  let dLeft = Math.floor((nextBday - tempDate) / (1000 * 60 * 60 * 24));
-
-  document.getElementById("countdown").innerHTML = `${mLeft} bulan ${dLeft} hari ( ${totalDaysLeft} hari lagi )`;
-  document.getElementById("targetAge").innerHTML = `kamu umur ${yNow + 1} tahun`;
-
-  // Zodiak
-  document.getElementById("zodiac-box").innerHTML = "Zodiak: " + getZodiac(dBirth, mBirth);
-
-  // Motivasi
-  let pesan = "";
-  if (yNow <= 12) pesan = `Di umur <span class="highlight">${yNow} tahun</span>, dunia adalah taman bermainmu. Teruslah bereksplorasi!`;
-  else if (yNow <= 19) pesan = `Di umur <span class="highlight">${yNow} tahun</span> ini kamu masih sangat muda. Ini waktu terbaik untuk mencoba banyak hal. Jangan takut gagal!`;
-  else if (yNow <= 30) pesan = `Umur <span class="highlight">${yNow} tahun</span> adalah masa emas. Bangun karirmu dan nikmati setiap prosesnya.`;
-  else pesan = `Usia <span class="highlight">${yNow} tahun</span> adalah anugerah kebijaksanaan. Teruslah menjadi inspirasi.`;
-
-  document.getElementById("motivasi").innerHTML = pesan;
-  document.getElementById("result-box").style.display = "block";
-  
-  setTimeout(() => {
-    document.getElementById("result-box").scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  }, 100);
+function hitungKalori() {
+  if(!musicStarted) { audio.play().catch(() => {}); musicStarted = true; }
+  const w = parseFloat(document.getElementById("weight").value);
+  const h = parseFloat(document.getElementById("height").value);
+  const g = document.getElementById("gender").value;
+  if (!w || !h) { alert("Isi data dulu!"); return; }
+  let kal = (g === "pria") ? (24 * w) + (5 * h / 10) : (22 * w) + (4 * h / 10);
+  const bmi = w / ((h/100)*(h/100));
+  let akt = (bmi < 18.5) ? "Jalan santai 25 mnt & stretching." : (bmi <= 24.9) ? "Lari santai ±2 km & bersepeda 20 mnt." : "Jalan cepat 30 mnt & sepeda statis.";
+  document.getElementById("val-kalori").innerHTML = Math.round(kal) + " kkal";
+  document.getElementById("list-aktivitas").innerHTML = akt;
+  const foodMenus = [
+      "Pagi: Oatmeal/Roti gandum, Siang: Nasi+Ikan+Sayur, Malam: Sup ayam bening.",
+      "Pagi: Telur rebus+Buah, Siang: Nasi+Ayam bakar+Lalapan, Malam: Tumis sayur."
+  ];
+  document.getElementById("food-menu").innerHTML = foodMenus[Math.floor(Math.random() * foodMenus.length)];
+  const mots = ["Kesehatan adalah investasi terbaik.", "Konsisten lebih penting daripada kecepatan.", "Rawatlah tubuhmu sebaik mungkin."];
+  document.getElementById("motivasi-kalori").innerHTML = "💬 " + mots[Math.floor(Math.random() * mots.length)];
+  document.getElementById("result-box-kalori").style.display = "block";
 }
 
 createShapes();
