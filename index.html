@@ -264,7 +264,6 @@ button:active { transform: scale(0.96); opacity: 0.9; }
 
     <div class="result-box" id="result-box-umur">
       <div id="hasil-umur" class="hasil-main"></div>
-      <!-- COUNTDOWN ULTAH + UMUR BERIKUTNYA -->
       <div id="countdown-ultah" class="countdown-txt"></div>
       <div class="info-card" id="zodiac-box" style="text-align:center; font-weight:900; color:#7c3aed;"></div>
       <div class="info-card" id="motivasi-umur"></div>
@@ -294,6 +293,30 @@ button:active { transform: scale(0.96); opacity: 0.9; }
         <b>🍽️ Contoh Menu:</b><br><span id="food-menu"></span>
       </div>
       <div class="info-card" id="motivasi-kalori" style="font-style:italic; text-align:center;"></div>
+    </div>
+  </div>
+
+  <!-- CARD 3: TIPE TUBUH (FITUR BARU) -->
+  <div class="card">
+    <span class="card-title">💪 Cek Tipe Tubuh (Somatotype)</span>
+    <div class="input-group">
+      <input type="number" id="st-height" placeholder="Tinggi (cm)">
+      <input type="number" id="st-weight" placeholder="Berat (kg)">
+    </div>
+    <div class="input-group" style="margin-bottom:15px;">
+      <input type="number" id="st-waist" placeholder="Lingkar Perut (cm) - Opsional">
+    </div>
+    <button onclick="hitungTipeTubuh()" style="background: linear-gradient(135deg, #f59e0b, #ef4444);">CEK SEKARANG</button>
+
+    <div class="result-box" id="result-box-tipe">
+      <div style="text-align:center; font-size:11px; font-weight:800; color:#ef4444; text-transform:uppercase;">Tipe Tubuh Anda</div>
+      <div id="val-tipe" class="hasil-main" style="font-size:26px; margin:8px 0;"></div>
+      
+      <div class="info-card" style="text-align: center;">
+        <b>BMI Anda:</b> <span id="st-bmi-val"></span>
+      </div>
+
+      <div class="info-card" id="st-desc"></div>
     </div>
   </div>
 </div>
@@ -360,17 +383,13 @@ function hitungUmur(){
   const now = new Date();
   const birth = new Date(y, m, d);
 
-  // Umur detail saat ini
   let yNow = now.getFullYear() - birth.getFullYear();
   let mNow = now.getMonth() - birth.getMonth();
   let dNow = now.getDate() - birth.getDate();
   if (dNow < 0) { mNow--; dNow += new Date(now.getFullYear(), now.getMonth(), 0).getDate(); }
   if (mNow < 0) { yNow--; mNow += 12; }
 
-  // Umur target di ultah berikutnya
   let targetAge = yNow + 1;
-
-  // Countdown ke ultah berikutnya
   let nextBday = new Date(now.getFullYear(), m, d);
   if (now >= nextBday) nextBday.setFullYear(now.getFullYear() + 1);
   let totalDaysLeft = Math.ceil((nextBday - now) / (1000 * 60 * 60 * 24));
@@ -401,6 +420,35 @@ function hitungKalori() {
   const mots = ["Kesehatan adalah investasi terbaik.", "Konsisten lebih penting daripada kecepatan.", "Rawatlah tubuhmu sebaik mungkin."];
   document.getElementById("motivasi-kalori").innerHTML = "💬 " + mots[Math.floor(Math.random() * mots.length)];
   document.getElementById("result-box-kalori").style.display = "block";
+}
+
+function hitungTipeTubuh() {
+  if(!musicStarted) { audio.play().catch(() => {}); musicStarted = true; }
+  const h = parseFloat(document.getElementById("st-height").value);
+  const w = parseFloat(document.getElementById("st-weight").value);
+  const waist = parseFloat(document.getElementById("st-waist").value) || 0;
+
+  if (!h || !w) { alert("Isi tinggi dan berat dulu ya!"); return; }
+
+  const bmi = w / ((h / 100) * (h / 100));
+  let tipe = "";
+  let deskripsi = "";
+
+  if (bmi < 18.5 && (waist < 80 || waist === 0)) {
+    tipe = "Ectomorph 🦒";
+    deskripsi = "Memiliki postur ramping, sulit menambah berat badan, dan metabolisme cenderung sangat cepat.";
+  } else if (bmi >= 18.5 && bmi <= 24.9 && (waist < 90 || waist === 0)) {
+    tipe = "Mesomorph 🐅";
+    deskripsi = "Memiliki postur proporsional dan atletis. Mudah untuk membangun massa otot maupun membakar lemak.";
+  } else {
+    tipe = "Endomorph 🐘";
+    deskripsi = "Memiliki struktur tulang yang besar dan cenderung lebih mudah menyimpan lemak tubuh. Disarankan rutin olahraga kardio.";
+  }
+
+  document.getElementById("val-tipe").innerText = tipe;
+  document.getElementById("st-bmi-val").innerText = bmi.toFixed(1);
+  document.getElementById("st-desc").innerText = deskripsi;
+  document.getElementById("result-box-tipe").style.display = "block";
 }
 
 createShapes();
